@@ -1,0 +1,35 @@
+version: '3'
+services:
+  api:
+    container_name: miket_api_container
+    build:
+      context: ../api
+      dockerfile: ./docker/Dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DEV_DATABASE: ${POSTGRES_DEV_DATABASE}
+      POSTGRES_TEST_DATABASE: ${POSTGRES_TEST_DATABASE}
+      POSTGRES_PRO_DATABASE: ${POSTGRES_PRO_DATABASE}
+    volumes:
+      - .:/workspace
+    tty: true
+    stdin_open: true
+    ports:
+      - 3000:3000
+  db:
+    container_name: miket_db_container
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - miket-db-volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_ALLOW_EMPTY_PASSWORD: "yes"
+      POSTGRES_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DEV_DATABASE: ${POSTGRES_DEV_DATABASE}
+
+volumes:
+  miket-db-volume:
