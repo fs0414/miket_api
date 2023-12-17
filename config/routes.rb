@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
       resources :users, only: %i[index] do
         resources :categories, only: %i[index] do
-          resources :items, only: %i[create]
+          resources :items, only: %i[create update destroy]
         end
       end
     end

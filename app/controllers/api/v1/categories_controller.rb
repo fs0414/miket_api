@@ -2,7 +2,7 @@ class Api::V1::CategoriesController < BaseController
   before_action :require_login
 
   def index
-    categories = Category.where(user_id: params[:user_id])
-    render json: categories
+    categories = current_user.categories.as_json(include: :items)
+    render json: { user_id: current_user.id, data: categories }
   end
 end
