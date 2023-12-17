@@ -32,5 +32,13 @@ module Workspace
     config.generators do |g|
       g.controller_parent_class = 'BaseController'
     end
+
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
+  end
+  class ActiveRecord::Base
+    singleton_class.attr_accessor :timestamped_migrations
+    self.timestamped_migrations = true
   end
 end
