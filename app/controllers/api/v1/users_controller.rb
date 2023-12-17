@@ -8,7 +8,23 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render json: { message: user }, status: :created
+      category = Category.create(
+        [
+          {
+            name: "goods",
+            user_id: user.id
+          },
+          {
+            name: "furniture",
+            user_id: user.id
+          },
+          {
+            name: "fashion",
+            user_id: user.id
+          }
+        ]
+      )
+      render json: { user: user, categpry: category }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end

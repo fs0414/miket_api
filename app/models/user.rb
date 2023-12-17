@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :catetories, dependent: :destroy
+  has_many :items, dependent: :destroy
+
+
   enum :role, { user: 0, admin: 1 }
 
   validates :name, presence: true
