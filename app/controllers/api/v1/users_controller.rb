@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < BaseController
   def index
     users = User.all
     render json: { data: users }
