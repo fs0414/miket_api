@@ -11,10 +11,15 @@ Rails.application.routes.draw do
       post 'signin', to: 'users#signin'
       post 'signout', to: 'users#signout'
 
-      resources :users, only: %i[index] do
-        resources :categories, only: %i[index] do
-          resources :items, only: %i[create update destroy]
-        end
+      # resources :users, only: %i[index] do
+      #   resources :categories, only: %i[index] do
+      #     resources :items, only: %i[create update destroy]
+      #   end
+      # end
+
+      resources :users, only: %i[index]
+      resources :categories, only: %i[index] do
+        resources :items, only: %i[create update destroy]
       end
     end
   end

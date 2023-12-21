@@ -1,4 +1,6 @@
 class Api::V1::UsersController < BaseController
+  # skip_before_action :require_login, only: [:signin, :signup]
+  before_action :authenticate_request!, except: [:signup, :signin]
   def index
     users = User.all
     render json: { data: users }
@@ -31,13 +33,15 @@ class Api::V1::UsersController < BaseController
   end
 
   def signin
+
+
     user = login(params[:email], params[:password])
 
     jwt_secret = ENV['JWT_SECRET']
 
     token = JWT.encode({ email: user.email }, jwt_secret)
 
-    render json: { token: token, user: user }, status: :ok
+    render json: { token: token, user: user.as_json(only: [:id, :name, :email, :role]) }, status: :ok
     rescue => e
       render json: { error: e }, status: :unauthorized
   end

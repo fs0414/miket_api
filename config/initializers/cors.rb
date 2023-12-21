@@ -16,4 +16,5 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     origins 'https://autovice.jp', 'http://localhost:3000', 'http://localhost:5173'
     resource '*', methods: :any, headers: :any
+  end
 end

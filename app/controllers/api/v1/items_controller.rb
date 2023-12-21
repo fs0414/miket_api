@@ -1,5 +1,5 @@
-class Api::V1::ItemsController < ApplicationController
-  before_action :require_login
+class Api::V1::ItemsController < BaseController
+  before_action :authenticate_request
 
   def create
     item = current_user.items.new(item_params)
@@ -35,6 +35,6 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :quantity)
+    params.require(:item).permit(:name, :quantity, :category_id)
   end
 end
