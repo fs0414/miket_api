@@ -37,6 +37,7 @@ module Workspace
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
   end
+
   class ActiveRecord::Base
     singleton_class.attr_accessor :timestamped_migrations
     self.timestamped_migrations = true

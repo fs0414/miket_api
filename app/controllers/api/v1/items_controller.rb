@@ -2,8 +2,9 @@ class Api::V1::ItemsController < BaseController
   before_action :authenticate_request
 
   def create
-    item = current_user.items.new(item_params)
-    item.category_id = params[:category_id]
+    item_create_command = Items::ItemCreateCommand.new(item_create_params)
+
+    item = item_create_command.run
 
     if item.save
       render json: item
@@ -35,6 +36,10 @@ class Api::V1::ItemsController < BaseController
   private
 
   def item_params
-    params.require(:item).permit(:name, :quantity, :category_id)
+    params.require(:item).permit(:name, :quantity)
+  end
+
+  def item_create_params
+    item_params.merge(category_id: params[:category_id], user: current_user)
   end
 end

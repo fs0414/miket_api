@@ -1,6 +1,5 @@
 class Api::V1::UsersController < BaseController
-  # skip_before_action :require_login, only: [:signin, :signup]
-  before_action :authenticate_request!, except: [:signup, :signin]
+  before_action :authenticate_request, except: [:signup, :signin]
   def index
     users = User.all
     render json: { data: users }
