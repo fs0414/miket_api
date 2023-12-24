@@ -1,4 +1,4 @@
-class Items::ItemCreateCommand
+class Items::ItemUpdateCommand
   include CommandModule
   include ActiveModel::Model
   include ActiveModel::Attributes
@@ -7,12 +7,11 @@ class Items::ItemCreateCommand
   attribute :quantity, :integer
   attribute :category_id, :string
   attribute :user
-
-  validates :name, presence: true
+  attribute :item
 
   def run
-    return false unless valid?
-
-    user.items.new(name: name, quantity: quantity, category_id: category_id)
+   item.update(name: name, quantity: quantity, category_id: category_id)
+    updated_item = item
+    updated_item
   end
 end

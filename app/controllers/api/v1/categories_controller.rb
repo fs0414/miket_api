@@ -3,6 +3,7 @@ class Api::V1::CategoriesController < BaseController
 
   def index
     categories = current_user.categories.as_json(include: :items)
-    render json: categories
+    total_items = current_user.items.count()
+    render json: { categories: categories, total_items: total_items }
   end
 end

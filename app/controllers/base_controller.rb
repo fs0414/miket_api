@@ -1,5 +1,11 @@
 class BaseController < ApplicationController
 
+  rescue_from Excpections::ApplicationError do |e|
+    # Excpections::ApplicationError.new(name, )
+    log_error(e)
+    render json: { error: e.error, message: e.message }, status: e.status
+  end
+
   protected
 
   def authenticate_request
@@ -15,6 +21,10 @@ class BaseController < ApplicationController
   end
 
   private
+
+  def log_error(e)
+    Rails.logger.error(Rails.logger.error("[Error]: #{e.class.name} : #{e.message}"))
+  end
 
   def extract_token
     header = request.headers['Authorization']
