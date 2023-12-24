@@ -50,10 +50,19 @@ class Api::V1::UsersController < BaseController
     render json: { message: 'logout success' }
   end
 
+  def update_max_items
+    item = current_user.update(max_items: max_items_params[:max_items])
+    render json: item
+  end
+
   private
 
   def user_params
     params.permit(:name, :email, :password, :password_confirmation, :role)
+  end
+
+  def max_items_params
+    params.permit(:max_items)
   end
 
   def form_authenticity_token; end
