@@ -10,8 +10,5 @@ class Items::ItemUpdateCommand
 
   def run
     item.update(name: name, quantity: quantity, category_id: category_id)
-
-    updated_item = item
-    updated_item
   end
 end
