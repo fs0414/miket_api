@@ -25,7 +25,7 @@ class Api::V1::ItemsController < BaseController
     item = current_user.items.find(params[:id])
 
     if item.destroy
-      render json: { message: 'Item successfully deleted.' }
+      render json: item
     else
       render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
     end
