@@ -6,12 +6,9 @@ class Items::ItemUpdateCommand
   attribute :name, :string
   attribute :quantity, :integer
   attribute :category_id, :string
-  attribute :user
   attribute :item
 
   def run
-   item.update(name: name, quantity: quantity, category_id: category_id)
-    updated_item = item
-    updated_item
+    item.update(name: name, quantity: quantity, category_id: category_id)
   end
 end
