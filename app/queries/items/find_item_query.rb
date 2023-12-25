@@ -1,4 +1,4 @@
-class Items::UserFindItemQuery
+class Items::FindItemQuery
   include QueryModule
   include ActiveModel::Model
   include ActiveModel::Attributes

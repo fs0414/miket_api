@@ -11,7 +11,7 @@ class Items::ItemUpdateUseCase
 
   def run
     use_case = ApplicationRecord.transaction do
-      find_item = Items::UserFindItemQuery.new(item_id: item_id).run
+      find_item = Items::FindItemQuery.new(item_id: item_id).run
 
       updated_item = Items::ItemUpdateCommand.new(name: name, quantity: quantity, category_id: category_id, item: find_item).run
 
