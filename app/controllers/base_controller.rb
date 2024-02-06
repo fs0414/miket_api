@@ -1,9 +1,19 @@
 class BaseController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :invalid_error
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found_error
+  # rescue_from StandardError, with: :er
 
-  rescue_from Excpections::ApplicationError do |e|
-    # Excpections::ApplicationError.new(name, )
-    log_error(e)
-    render json: { error: e.error, message: e.message }, status: e.status
+  def invalid_error(error)
+    render json: {
+      errors: error
+      # errors: error.record.errors
+    }, status: :bad_request
+  end
+
+  def not_found_error(error)
+    render json: {
+      errors: error
+    }, status: :not_found
   end
 
   protected

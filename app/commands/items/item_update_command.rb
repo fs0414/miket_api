@@ -8,7 +8,20 @@ class Items::ItemUpdateCommand
   attribute :category_id, :string
   attribute :item
 
+  validates :name, presence: true
+  validates :quantity, presence: true
+  validates :category_id, presence: true
+
   def run
-    item.update(name: name, quantity: quantity, category_id: category_id)
+    item.update!(
+      name: name,
+      quantity: quantity,
+      category_id: category_id
+    )
+    item
+  end
+
+  def success?
+    errors.none?
   end
 end

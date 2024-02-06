@@ -9,10 +9,9 @@ class Items::ItemCreateCommand
   attribute :user
 
   validates :name, presence: true
+  validates :quantity, presence: true
 
   def run
-    return false unless valid?
-
-    user.items.new(name: name, quantity: quantity, category_id: category_id)
+    user.items.create!(name: name, quantity: quantity, category_id: category_id)
   end
 end

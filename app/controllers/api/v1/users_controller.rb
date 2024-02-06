@@ -1,39 +1,26 @@
 class Api::V1::UsersController < BaseController
-  before_action :authenticate_request, except: [:signup, :signin]
+  before_action :authenticate_request, except: [:signup, :signin, :index]
   def index
     users = User.all
     render json: { data: users }
   end
 
   def signup
-    user = User.new(user_params)
+    ApplicationRecord.transaction do
+      user = User.new(user_params)
+      if user.save
+        Category.create!([
+          { name: "goods", user_id: user.id },
+          { name: "furniture", user_id: user.id },
+          { name: "fashion", user_id: user.id }
+        ])
 
-    if user.save
-      category = Category.create(
-        [
-          {
-            name: "goods",
-            user_id: user.id
-          },
-          {
-            name: "furniture",
-            user_id: user.id
-          },
-          {
-            name: "fashion",
-            user_id: user.id
-          }
-        ]
-      )
-      render json: { user: user, categpry: category }, status: :created
-    else
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+        render json: { user: user, categpry: user.categories }, status: :created
+      end
     end
   end
 
   def signin
-
-
     user = login(params[:email], params[:password])
 
     jwt_secret = ENV['JWT_SECRET']

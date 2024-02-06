@@ -9,3 +9,5 @@ ADD ../Gemfile.lock /workspace/Gemfile.lock
 
 RUN gem install bundler -v 2.4.19
 RUN bundle install
+
+CMD [ "rails", "s", "-b", "0.0.0.0" ]

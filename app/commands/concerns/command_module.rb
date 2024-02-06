@@ -5,4 +5,9 @@ module CommandModule
   def run
     raise NotImplementError
   end
+
+  def success?
+    # errors.none?
+    raise NotImplementError
+  end
 end

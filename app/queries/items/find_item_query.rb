@@ -6,6 +6,6 @@ class Items::FindItemQuery
   attribute :item_id, :string
 
   def run
-    Item.where(id: item_id)
+    Item.find(item_id)
   end
 end

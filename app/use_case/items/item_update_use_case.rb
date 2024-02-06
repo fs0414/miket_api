@@ -10,14 +10,17 @@ class Items::ItemUpdateUseCase
   attribute :user
 
   def run
-    use_case = ApplicationRecord.transaction do
+    command = ApplicationRecord.transaction do
       find_item = Items::FindItemQuery.new(item_id: item_id).run
 
-      updated_item = Items::ItemUpdateCommand.new(name: name, quantity: quantity, category_id: category_id, item: find_item).run
-
-      updated_item
+      Items::ItemUpdateCommand.new(
+        name: name,
+        quantity: quantity,
+        category_id: category_id,
+        item: find_item
+      ).run
     end
 
-    use_case
+    return command if command
   end
 end
